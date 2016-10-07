@@ -4,13 +4,13 @@ ipa-resigner
 This script re-signs an IPA for AppStore, Adhoc or Development Deployment.
 It is compatible with Swift Code.
 
-##Requirements
+## Requirements
 - Mac with OSX Yosemite (or later)
 - Xcode 6 (or later)
 - Xcode command line tools
 - A valid developer account with the iOS Developer Program
 
-##Usage
+## Usage
  1. Generate one distribution certificate in the member center (http://developer.apple.com -> `Member Center` -> `Certificates, Identifiers & Profiles`)
  2. Import the new certificate in the Keychain of your Mac: be sure to keep the Keychain clean and remove old certificates.
     1. Open the `Keychain Access` app in your mac and choose `Import item` in the login keychain
@@ -20,13 +20,13 @@ It is compatible with Swift Code.
  4. Run the script with the following parameters:  
 	`sh resign.sh /path/to/ipa /path/to/provisioning_profile "iPhone Developer/Distribution: **Team Member Name**"`
 
-####Example for Development Re-sign:
-	sh resign.sh MyApp.ipa Adhoc_deployment.mobileprovision "iPhone Developer: MyTeam Member (XXXXXXXXXX)"
-####Example for Adhoc Re-sign:
-	sh resign.sh MyApp.ipa Adhoc_deployment.mobileprovision "iPhone Distribution: MyTeam Member (XXXXXXXXXX)"
-####Example for AppStore Re-sign:
-	sh resign.sh MyApp.ipa AppStore_deployment.mobileprovision "iPhone Distribution: MyTeam Member (XXXXXXXXXX)"
+#### Example for Development Re-sign:
+	sh resign.sh MyApp.ipa Adhoc_deployment.mobileprovision ./ "iPhone Developer: MyTeam Member (XXXXXXXXXX)"
+#### Example for Adhoc Re-sign:
+	sh resign.sh MyApp.ipa Adhoc_deployment.mobileprovision ./ "iPhone Distribution: MyTeam Member (XXXXXXXXXX)"
+#### Example for AppStore Re-sign:
+	sh resign.sh MyApp.ipa AppStore_deployment.mobileprovision ./ "iPhone Distribution: MyTeam Member (XXXXXXXXXX)"
 
 
-#License
+# License
 This script is distributed in terms of LGPL license. See http://www.gnu.org/licenses/lgpl.html for more details.

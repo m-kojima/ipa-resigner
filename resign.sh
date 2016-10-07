@@ -71,7 +71,7 @@ echo "Application Identifier Prefix: ${APPLICATION_IDENTIFIER_PREFIX}"
 
 echo "Signing Identity: ${SIGNING_IDENTITY}"
 
-BUNDLE_IDENTIFIER=$(/usr/libexec/Plistbuddy -c "Print :CFBundleIdentifier" $IPA_CONTENT_PATH/Payload/${APP_NAME}/Info.plist)
+BUNDLE_IDENTIFIER=$(/usr/libexec/Plistbuddy -c "Print :CFBundleIdentifier" "${IPA_CONTENT_PATH}/Payload/${APP_NAME}/Info.plist")
 echo "Bundle Identifier: ${BUNDLE_IDENTIFIER}"
 
 PROVISIONING_DEVICES=$(/usr/libexec/Plistbuddy -c "Print :ProvisionedDevices" "${PROVISIONING_PROFILE_DECRYPTED}")
@@ -90,16 +90,15 @@ echo "Provisioning get-task-allow: ${PROVISIONING_GET_TASK_ALLOW}"
 
 
 #Cleaning Ipacontent files
-rm -rf $IPA_CONTENT_PATH/Payload/${APP_NAME}/_CodeSignature/
-rm -f $IPA_CONTENT_PATH/Payload/${APP_NAME}/embedded.mobileprovision
-
+rm -rf "$IPA_CONTENT_PATH/Payload/${APP_NAME}/_CodeSignature/"
+rm -f "$IPA_CONTENT_PATH/Payload/${APP_NAME}/embedded.mobileprovision"
 
 #Setting a new identity
-cp ${PROVISIONING_PROFILE} $IPA_CONTENT_PATH/Payload/${APP_NAME}/embedded.mobileprovision
+cp ${PROVISIONING_PROFILE} "$IPA_CONTENT_PATH/Payload/${APP_NAME}/embedded.mobileprovision"
 APP_ENTITLEMENTS="$DESTINATION_PATH/Entitlements.plist"
 if [ -f ${APP_ENTITLEMENTS} ]
 then
-    rm -f ${APP_ENTITLEMENTS}
+    rm -f "${APP_ENTITLEMENTS}"
 fi
 
 /usr/libexec/PlistBuddy -c "Add :application-identifier string ${APPLICATION_IDENTIFIER_PREFIX}.${BUNDLE_IDENTIFIER}" "${APP_ENTITLEMENTS}"
@@ -119,7 +118,7 @@ cp "${APP_ENTITLEMENTS}" "$IPA_CONTENT_PATH/Payload/${APP_NAME}/archived-expande
 echo "Resigning the app with identity: ${SIGNING_IDENTITY}"
 if [ -d "$IPA_CONTENT_PATH/Payload/${APP_NAME}/Frameworks" ];
 then
-    for SWIFT_LIB in $(ls -1 $IPA_CONTENT_PATH/Payload/${APP_NAME}/Frameworks); do
+    for SWIFT_LIB in $(ls -1 "$IPA_CONTENT_PATH/Payload/${APP_NAME}/Frameworks"); do
         codesign --force --sign "${SIGNING_IDENTITY}" --verbose "$IPA_CONTENT_PATH/Payload/${APP_NAME}/Frameworks/${SWIFT_LIB}"
     done
 fi
